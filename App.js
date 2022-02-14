@@ -8,7 +8,6 @@ import Home from './screens/Home';
 import Tasks from './screens/Tasks';
 import Goal from './screens/Goal';
 import Settings from './screens/Settings'
-import Register from './components/Register';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,7 +28,6 @@ export default function App() {
         <Tab.Screen name="Inicio" component={Home} options={{ headerShown: false }} />
         <Tab.Screen name="Tareas" component={Tasks} />
         <Tab.Screen name="Meta" component={Goal} />
-        {/* <Tab.Screen name="Registro" component={Register} /> */}
         <Tab.Screen name="Configuracion" component={Settings} />
       </Tab.Navigator>
     </NavigationContainer>
