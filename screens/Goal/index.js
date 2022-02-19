@@ -38,6 +38,10 @@ function Goal() {
       <Text>
         {selectedIndex}
       </Text>
+
+      <Text>
+        Desde:
+      </Text>
         
       </View>
     );

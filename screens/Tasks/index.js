@@ -1,4 +1,5 @@
 import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
+import data from '../../data'
 
 const styles = StyleSheet.create({
   input: {
@@ -17,9 +18,7 @@ function Tasks() {
           style={styles.input}
           placeholder="Añade una nueva actividad"
         />
-        
         <Button title="Enviar" onPress={() => alert('Se envio')} />
-
         <Text>Actividades Actuales</Text>
         <Text>Cocinar</Text>
         <Text>programar</Text>
