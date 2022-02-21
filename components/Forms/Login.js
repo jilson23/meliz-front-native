@@ -4,10 +4,10 @@ import {
   TextInput,
   View,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView,
 } from 'react-native';
 
-import { loginRequest } from '../../services/api';
+import { loginRequest } from '../../services/user';
 import { useSelector, useDispatch } from 'react-redux';
 
 import useAuth from '../../hooks/useAuth';
@@ -55,7 +55,12 @@ const LoginForm = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <View>
         <Text style={styles.title}>Login Meliz</Text>
       </View>
@@ -77,10 +82,15 @@ const LoginForm = ({ navigation }) => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   title: {
     color: '#BB86FC',
     fontSize: 30,

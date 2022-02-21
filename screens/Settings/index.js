@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Button, Image, TextInput } from 'react-native';
+import { Text, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, View, TouchableOpacity, StyleSheet, Button, Image, TextInput } from 'react-native';
 import useAuth from '../../hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticated,  dataRefresh } from '../../store/actions';
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
-import { updateUser } from '../../services/api'
+import { updateUser } from '../../services/user'
 
 function Settings() {
   const { deleteData } = useAuth();
@@ -60,6 +60,12 @@ function Settings() {
 
 
   return (
+
+<KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         
         <TouchableOpacity
@@ -103,6 +109,8 @@ function Settings() {
         <Button title="Salir" style={styles.btnContainer} onPress={() => Logout()} />
 
       </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
     );
   }
 

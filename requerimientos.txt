@@ -19,5 +19,17 @@ dispatch(authenticated(true));
 
 
 
-import { useSelector } from 'react-redux';
-const isAuthenticated = useSelector(state => state.isAuthenticated);
+
+
+
+
+import { useDispatch, useSelector } from 'react-redux';
+import { dataRefresh } from '../../store/actions';
+
+    const dispatch = useDispatch()
+  const dataUser = useSelector(state => state.dataUser);
+  const user = useSelector(state => state.user);
+  const datarefresh = useSelector(state => state.dataRefresh);
+
+
+dispatch(dataRefresh(!datarefresh));
