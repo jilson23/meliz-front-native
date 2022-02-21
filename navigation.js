@@ -6,10 +6,29 @@ import Home from './screens/Home';
 import Tasks from './screens/Tasks';
 import Goal from './screens/Goal';
 import Settings from './screens/Settings'
+import { getAllDataUser } from './services/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { dataUser } from './store/actions';
 
 const Tab = createBottomTabNavigator();
 
-export default function Navigation() {
+export default function Navigation({ navigation }) {
+  const isAuthenticated = useSelector(state => state.isAuthenticated);
+  const datarefresh = useSelector(state => state.dataRefresh);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+
+  React.useEffect(async()=>{
+    const response = await getAllDataUser(user._id)
+    const data = await response.json()
+    dispatch(dataUser(data));
+  },[datarefresh])
+
+  React.useEffect(() => {
+    if(!isAuthenticated){
+      navigation.navigate('Login');
+    }
+  }, [isAuthenticated]);
   
   return (
       <Tab.Navigator

@@ -2,12 +2,17 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   SET_LOADING,
-  GET_USER_FROM_LOCALSTORAGE,
+  IS_AUTHENTICATED,
+  DATA_USER,
+  DATA_REFRESH,
 } from './types';
 
 const initialState = {
   isLoading: false,
   user: null,
+  isAuthenticated: false,
+  dataUser: {},
+  dataRefresh: false,
 };
 
 function reducer(state = initialState, action){
@@ -17,6 +22,21 @@ function reducer(state = initialState, action){
         ...state,
         user: action.payload,
       };
+    case IS_AUTHENTICATED: 
+      return{
+        ...state,
+        isAuthenticated: action.payload,
+      }
+    case DATA_USER: 
+      return{
+        ...state,
+        dataUser: action.payload,
+      }
+    case DATA_REFRESH: 
+      return{
+        ...state,
+        dataRefresh: action.payload,
+      }
     case LOGOUT_USER: {
       return {
         ...state,
@@ -27,12 +47,6 @@ function reducer(state = initialState, action){
       return {
         ...state,
         isLoading: action.payload,
-      };
-    }
-    case GET_USER_FROM_LOCALSTORAGE: {
-      return {
-        ...state,
-        user: action.payload,
       };
     }
     default:

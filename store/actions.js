@@ -1,17 +1,18 @@
 /* eslint-disable no-debugger */
 // eslint-disable-next-line camelcase
-import jwt_decode from 'jwt-decode';
+
 
 import {
   LOGIN_USER,
-  LOGOUT_USER,
+  IS_AUTHENTICATED,
   SET_LOADING,
-  GET_USER_FROM_LOCALSTORAGE,
+  DATA_USER,
+  LOGOUT_USER,
+  DATA_REFRESH,
 } from './types';
 
-import authService from '../services/auth';
 
-// // actions creators
+// 
 // export const updateCurrent = val => ({ type: UPDATE_CURRENT, payload: val })
 // export const loadTodos = todos => ({ type: LOAD_TODOS, payload: todos })
 // export const addTodo = todo => ({ type: ADD_TODO, payload: todo })
@@ -21,36 +22,14 @@ import authService from '../services/auth';
 // export const hideLoader = () => ({ type: HIDE_LOADER, payload: false })
 // export const errorMessage = (message) => ({ type: ERROR_MESSAGE, payload: message })
 
+// actions creators, son las acciones que se comunican con la funcion reductora
+export const setLoading = boolean => ({ type: SET_LOADING, payload: boolean })
+export const login = data => ({ type: LOGIN_USER, payload: data })
+export const dataUser = data => ({ type: DATA_USER, payload: data })
+export const authenticated = boolean => ({ type: IS_AUTHENTICATED, payload: boolean })
+export const dataRefresh = boolean => ({ type: DATA_REFRESH, payload: boolean })
 
-export const getUserFromLocalStorage = (dispatch) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    const decoded = jwt_decode(token);
-    dispatch({ type: GET_USER_FROM_LOCALSTORAGE, payload: decoded });
-  }
-};
+// son acciones de utilidad, tipo middlware, util para cuando hay que hacer algo con los datos antes de enviar a la funcion reductora
 
-export const loginUser = async (dispatch, user) => {
-  dispatch({ type: SET_LOADING, payload: true });
-  try {
-    const response = await authService.loginAccount(user);
 
-    const data = await response.json();
 
-    if (response.ok) {
-      localStorage.setItem('token', data.token);
-      const decoded = jwt_decode(data.token);
-      dispatch({ type: LOGIN_USER, payload: decoded });
-    }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    dispatch({ type: SET_LOADING, payload: false });
-  }
-};
-
-export const logout = (dispatch) => {
-  localStorage.removeItem('token');
-
-  dispatch({ type: LOGOUT_USER, payload: null });
-};

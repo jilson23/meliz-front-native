@@ -1,40 +1,52 @@
-import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { saveTodo, updateCurrent } from '../store/actions';
+import { useDispatch } from 'react-redux';
+import { authenticated, login } from '../store/actions';
+import jwt_decode from 'jwt-decode';
+import dayjs from 'dayjs';
 
 const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const dispatch = useDispatch();
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@storage_Key')
-      const data = jsonValue != null ? JSON.parse(jsonValue) : null;
-      if(data){
-        setIsAuthenticated(data);
+      if(jsonValue){
+        const decoded = jwt_decode(jsonValue);
+        const actualday = dayjs().unix()
+        if(decoded.exp < actualday){
+          alert('A pasado mucho tiempo, vuelve a Acceder')
+        }else{
+          dispatch(login(decoded));
+          dispatch(authenticated(true));
+        }
       }
-      
     } catch(e) {
-      console.error('error reading value', e)
+      console.error('error reading data', e)
     }
   }
 
   const storeData = async (value) => {
     try {
-      const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('@storage_Key', jsonValue)
-    } catch (e) {
-      // saving error
+        const jsonValue = JSON.stringify(value)
+        await AsyncStorage.setItem('@storage_Key', jsonValue)
+        getData();
+      } catch (e) {
+        console.error('error save data', e)
     }
   }
 
-  useEffect(() => {
-    getData()
-  }, [])
+  const deleteData = async () => {
+    
+    try {
+      await AsyncStorage.removeItem('@storage_Key')
+    } catch(e) {
+      console.error('error delete data', e)
+    }
+  }
 
   return {
-    isAuthenticated,
     storeData,
+    getData,
+    deleteData
   }
 }
 

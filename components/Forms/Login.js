@@ -8,11 +8,17 @@ import {
 } from 'react-native';
 
 import { loginRequest } from '../../services/api';
+import { useSelector, useDispatch } from 'react-redux';
+
 import useAuth from '../../hooks/useAuth';
+import { dataRefresh } from '../../store/actions';
+
 
 const LoginForm = ({ navigation }) => {
-  const { isAuthenticated, storeData } = useAuth();
-  
+  const dispatch = useDispatch()
+  const isAuthenticated = useSelector(state => state.isAuthenticated);
+  const datarefresh = useSelector(state => state.dataRefresh);
+  const { storeData, getData } = useAuth();
   const [form, setForm] = React.useState(null);
 
   const handleChangeText = (field, text) => {
@@ -23,7 +29,12 @@ const LoginForm = ({ navigation }) => {
   };
 
   React.useEffect(() => {
-    if (isAuthenticated) {
+    getData();
+  }, []);
+
+  React.useEffect(() => {
+    if(isAuthenticated){
+      dispatch(dataRefresh(!datarefresh))
       navigation.navigate('Navigation');
     }
   }, [isAuthenticated]);
@@ -34,7 +45,6 @@ const LoginForm = ({ navigation }) => {
       if(response.ok){
         const token = await response.json();
         await storeData(token);
-        navigation.navigate('Navigation');
       }else{
         alert("Usuario o contraseña incorrectos")
       }
