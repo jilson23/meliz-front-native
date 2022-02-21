@@ -24,6 +24,18 @@ export const getAllDataUser = (id) => {
   return fetch(`${API_URL}/api/users/${id}`, payload)
 }
 
+export const updateUser = (id, form) => {
+  const payload = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(form)
+  }
+
+  return fetch(`${API_URL}/api/users/${id}`, payload)
+}
+
 // export const uploadImage = (id) => {
 //   const payload = {
 //     method: 'PATCH',

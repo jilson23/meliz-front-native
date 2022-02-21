@@ -6,6 +6,14 @@ import dayjs from 'dayjs';
 
 const useAuth = () => {
   const dispatch = useDispatch();
+  const deleteData = async () => {
+    try {
+      await AsyncStorage.removeItem('@storage_Key')
+    } catch(e) {
+      console.error('error delete data', e)
+    }
+  }
+
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@storage_Key')
@@ -14,6 +22,7 @@ const useAuth = () => {
         const actualday = dayjs().unix()
         if(decoded.exp < actualday){
           alert('A pasado mucho tiempo, vuelve a Acceder')
+          deleteData()
         }else{
           dispatch(login(decoded));
           dispatch(authenticated(true));
@@ -34,14 +43,7 @@ const useAuth = () => {
     }
   }
 
-  const deleteData = async () => {
-    
-    try {
-      await AsyncStorage.removeItem('@storage_Key')
-    } catch(e) {
-      console.error('error delete data', e)
-    }
-  }
+  
 
   return {
     storeData,

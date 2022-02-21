@@ -1,11 +1,11 @@
-
+import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Button, Image, TextInput } from 'react-native';
 import useAuth from '../../hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticated,  dataRefresh } from '../../store/actions';
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
-import {  } from '../../store/actions';
+import { updateUser } from '../../services/api'
 
 function Settings() {
   const { deleteData } = useAuth();
@@ -14,6 +14,15 @@ function Settings() {
   const dataUser = useSelector(state => state.dataUser);
   const user = useSelector(state => state.user);
   const datarefresh = useSelector(state => state.dataRefresh);
+
+  const [form, setForm] = React.useState(null);
+
+  const handleChangeText = (field, text) => {
+    setForm({
+      ...form,
+      [field]: text,
+    });
+  };
   
   function Logout(){
     deleteData()
@@ -32,6 +41,21 @@ function Settings() {
       dispatch(dataRefresh(!datarefresh));
     }
   };
+
+  async function handleSubmit(){
+    try {
+      const response = await updateUser(user._id, form);
+      if(response.ok){
+        dispatch(dataRefresh(!datarefresh));
+        setForm({name:'',email:''})
+      }else{
+        alert("No se actualizaron los datos")
+      }
+      
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
 
 
@@ -62,15 +86,19 @@ function Settings() {
         <TextInput
           style={styles.input}
           placeholder={dataUser.name}
+          value={form?.name}
+          onChangeText={(text) => handleChangeText('name', text)}
         />
         <Text>Actualiza tu Email</Text>
         <TextInput
           style={styles.input}
           placeholder={dataUser.email}
+          value={form?.email}
+          onChangeText={(text) => handleChangeText('email', text)}
         />
         
         
-        <Button title="Enviar" style={styles.btnContainer} onPress={() => alert('Se envio')} />
+        <Button title="Enviar" style={styles.btnContainer} onPress={() => handleSubmit()} />
         <Text>{"\n"}</Text>
         <Button title="Salir" style={styles.btnContainer} onPress={() => Logout()} />
 
@@ -104,13 +132,15 @@ function Settings() {
       width: 25,
       marginTop:-20,
       left:30,
-      marginBottom:30
+      marginBottom:30,
+      opacity: 0.8
     },
     input: {
       height: 40,
       margin: 12,
       borderWidth: 1,
       padding: 10,
+      width:200,
     },
   });
   export default Settings
