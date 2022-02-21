@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Text, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, View, Button, TextInput, StyleSheet } from 'react-native';
 // import AddFecha from '../Date';
 import SelectTask from '../SelectTask';
-
-
+import {addProfit} from '../../services/profit'
+import { useDispatch, useSelector} from 'react-redux';
+import { dataRefresh } from '../../store/actions';
 
   const styles = StyleSheet.create({
     container: {
@@ -36,6 +38,35 @@ import SelectTask from '../SelectTask';
   });
   
   function Register() {
+    const dispatch = useDispatch()
+    const datarefresh = useSelector(state => state.dataRefresh);
+    const user = useSelector(state => state.user);
+
+    const [idTask, setIdTask] = useState()
+    const [ form, setForm] = useState(null)
+
+
+
+    async function handleSubmit(){
+      const payload = {
+        activityId:idTask,
+        value:form
+      }
+
+
+      try {
+        const response = await addProfit(user._id, payload);
+        if(response.ok){
+          dispatch(dataRefresh(!datarefresh));
+          setForm(null)
+        }else{
+          alert("No se actualizaron los datos")
+        }
+        
+      } catch (error) {
+        alert(error.message);
+      }
+    }
 
     return (
     <KeyboardAvoidingView
@@ -49,12 +80,14 @@ import SelectTask from '../SelectTask';
           style={styles.input}
           placeholder="useless placeholder"
           keyboardType="numeric"
+          onChangeText={(num) =>  setForm(num)}
+          
         />
         <Text> Por: </Text>
-        <SelectTask />
+        <SelectTask setIdTask={setIdTask} />
         {/* <AddFecha /> */}
         <Text> {'\n'} </Text>
-          <Button title="Enviar" style={styles.btnContainer} onPress={() => alert('Se envio')} />
+          <Button title="Enviar" style={styles.btnContainer} onPress={() => handleSubmit()} />
 
       </View>
       </TouchableWithoutFeedback>

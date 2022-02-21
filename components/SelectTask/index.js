@@ -1,22 +1,33 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Picker} from '@react-native-picker/picker';
+import { useSelector } from 'react-redux';
 
-function SelectTask(){
-    const [selectedLanguage, setSelectedLanguage] = useState();
+   
 
-    return(
-        <Picker
-        style={{height: 100, width: 300, marginBottom:50}}
-        selectedValue={selectedLanguage}
-        onValueChange={(itemValue, itemIndex) =>
-          setSelectedLanguage(itemValue)
-        }>
-        <Picker.Item label="Bailar" value="Bailar" />
-        <Picker.Item label="Diseñar" value="disenar" />
-        <Picker.Item label="cocinar" value="cocinar" />
-        <Picker.Item label="programar" value="programar" />
-      </Picker>
-    )
+function SelectTask({setIdTask}){
+
+  const dataUser = useSelector(state => state.dataUser);
+  const { activities } = dataUser
+  const [selectedActivity, setSelectedActivity] = useState(activities[0]._id);
+
+  useEffect(()=>{
+    setIdTask(selectedActivity)
+  },[selectedActivity])
+
+  return(
+      <Picker
+      style={{height: 100, width: 300, marginBottom:50}}
+      selectedValue={selectedActivity}
+      onValueChange={(itemValue, itemIndex) =>
+        setSelectedActivity(itemValue)
+      }>
+        {
+          activities?.map((item)=>(
+            <Picker.Item key={item._id} label={item.name} value={item._id} />
+          ))
+        }
+    </Picker>
+  )
 
 }
 
