@@ -11,7 +11,7 @@ const initialState = {
   isLoading: false,
   user: null,
   isAuthenticated: false,
-  dataUser: {},
+  dataUser: null,
   dataRefresh: false,
 };
 
