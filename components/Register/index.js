@@ -78,7 +78,7 @@ import { dataRefresh } from '../../store/actions';
           <Text>Me gané</Text>
         <TextInput
           style={styles.input}
-          placeholder="useless placeholder"
+          placeholder="Cantidad ganada"
           keyboardType="numeric"
           onChangeText={(num) =>  setForm(num)}
           
