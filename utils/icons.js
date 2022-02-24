@@ -1,6 +1,6 @@
 const iconsName = (routeName) => {
     const icons = {
-    Inicio: 'home',
+      Inicio: 'home',
       Actividades: 'tasks',
       Meta: 'tachometer',
       Configuracion: 'gears',

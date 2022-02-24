@@ -6,25 +6,8 @@ import { dataRefresh } from '../../store/actions';
 import dayjs from 'dayjs';
 import { updateUser } from '../../services/user';
 import { addGoal } from '../../services/goal';
+import styles from '../../style';
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1
-    },
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      width:200
-    },
-    button: { backgroundColor: '#0176ff', padding: 7, marginTop: 10 },
-    buttonText: {
-      fontSize: 20,
-      color: '#fff',
-      textAlign: 'center',
-    },
-  })
 
 function Goal() {
   const dispatch = useDispatch()
@@ -94,28 +77,37 @@ function Goal() {
     return (
       <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
+      style={styles.container2}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Aumenta tu meta si es muy fácil de lograr</Text>
-        <Text>disminuye tu meta si es muy dificil de lograr lograr {'\n'} {'\n'}</Text>
-        <Text>Me voy a ganar:</Text>
-        <TextInput
+      
+      <Text style={styles.text}>Aumenta tu meta si es muy fácil de lograr</Text>
+      <Text style={styles.text}>disminuye tu meta si es muy dificil de lograr{'\n'} {'\n'}</Text>
+        <Text style={styles.title1}>Me voy a ganar:</Text>
+         <TextInput
           style={styles.input}
-          placeholder={dataUser?.goals[0].value}
-          keyboardType="numeric"
+          placeholder='añade una cantidad'
           onChangeText={(num) =>  handleChangeText('value', num)}
         />
+        
 
         <SegmentedControlTab
+          tabsContainerStyle={styles.tabsContainerStyle}
+          tabStyle={styles.tabStyle}
+          firstTabStyle={styles.firstTabStyle}
+          lastTabStyle={styles.lastTabStyle}
+          tabTextStyle={styles.tabTextStyle}
+          activeTabStyle={styles.activeTabStyle}
+          activeTabTextStyle={styles.activeTabTextStyle}
+
           values={["Semanales", "Quincenales", "Mensuales"]}
           selectedIndex={selectedIndex}
           onTabPress={(index) => { handleTabPress(index) }}
-        />
+        /> 
 
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Enviar</Text>
+        <Text style={styles.buttontext}>Enviar</Text>
       </TouchableOpacity>
         
       </View>

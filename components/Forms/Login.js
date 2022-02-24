@@ -2,16 +2,14 @@ import React from 'react';
 import {
   Text,
   TextInput,
-  View,
-  StyleSheet,
-  TouchableOpacity, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView,
+  TouchableOpacity,
 } from 'react-native';
-
+import styles from '../../style';
 import { loginRequest } from '../../services/user';
 import { useSelector, useDispatch } from 'react-redux';
-
 import useAuth from '../../hooks/useAuth';
 import { dataRefresh } from '../../store/actions';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const LoginForm = ({ navigation }) => {
@@ -55,67 +53,29 @@ const LoginForm = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View>
-        <Text style={styles.title}>Login Meliz</Text>
-      </View>
-      <Text style={styles.text}>Email</Text>
-      <TextInput
-        autoCapitalize="none"
-        style={styles.input}
-        onChangeText={(text) => handleChangeText('email', text)}
-        keyboardType="email-address"
-      />
-      <Text style={styles.text}>Password</Text>
-      <TextInput
-        autoCapitalize="none"
-        onChangeText={(text) => handleChangeText('password', text)}
-        style={styles.input}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-    </View>
-    </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+
+        <SafeAreaView style={styles.containerdark}>
+          <Text style={styles.title1dark}>Meliz</Text>
+          <Text style={styles.title2dark}>Tu Meta Feliz</Text>
+          <Text style={styles.textdark}>Email</Text>
+          <TextInput
+            autoCapitalize="none"
+            style={styles.inputdark}
+            onChangeText={(text) => handleChangeText('email', text)}
+            keyboardType="email-address"
+          />
+          <Text style={styles.textdark}>Password</Text>
+          <TextInput
+            autoCapitalize="none"
+            onChangeText={(text) => handleChangeText('password', text)}
+            style={styles.inputdark}
+            secureTextEntry
+          />
+          <TouchableOpacity style={styles.buttondark} onPress={handleSubmit}>
+            <Text style={styles.buttontextdark}>Login</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  title: {
-    color: '#BB86FC',
-    fontSize: 30,
-    marginBottom: 40,
-  },
-  text: {
-    color: 'white',
-    fontSize: 30,
-    marginBottom: 10,
-  },
-  input: {
-    height: 40,
-    color: 'white',
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: 'white',
-    padding: 10,
-    width: 300,
-  },
-  button: { backgroundColor: '#BB86FC', padding: 7, marginTop: 10 },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff',
-    textAlign: 'center',
-  },
-});
 
 export default LoginForm;

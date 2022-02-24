@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
-import { Text, View, Button } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
+import styles from '../../style';
 import isBetween from 'dayjs/plugin/isBetween';
 dayjs.extend(isBetween)
 
@@ -61,17 +62,34 @@ function Resume ({ navigation }){
 
   return(
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-    <Text>Te quedan { dataUser ? (calDays( dataUser.initPeriod, dataUser.finalPeriod)):(null)} dias y te faltan ${result} para lograr la meta de ${dataUser?.goals[0].value}   {"\n"} {"\n"}</Text>
-    <Button title="Añadir una ganancia" onPress={() => navigation.navigate('Register')} />
+    <Text style={styles.spaces}> 
+      <Text>Te quedan </Text>
+      <Text style={styles.title1}>{ dataUser ? (calDays( dataUser.initPeriod, dataUser.finalPeriod)):(null)} dias </Text>
+      <Text>y te faltan</Text>
+    </Text>
+    
+    <Text style={styles.title2}>${result}</Text>
+    
+    <Text style={styles.spaces}>
+      <Text>para lograr la meta de </Text>
+    </Text>
+    <Text style={styles.title1}>${dataUser?.goals[0].value}</Text>
+    
 
-    <Text> {"\n"} Actividades que más te han generado ingreso en general {"\n"} </Text>
+    
+
+    <Text style={styles.title1}> {"\n"} Actividades con más ganancias: </Text>
       {
         orderActivities?.map((activity)=>(
-          <Text>
+          <Text key={activity._id}>
           <Text>{activity.name}</Text> <Text> = ${activity.value}</Text>
           </Text>
         ))
       }
+
+    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')}>
+      <Text style={styles.buttontext}>Añadir una ganancia</Text>
+    </TouchableOpacity>
     
 
   </View>

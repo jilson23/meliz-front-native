@@ -9,6 +9,7 @@ import Settings from './screens/Settings'
 import { getAllDataUser } from './services/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { dataUser } from './store/actions';
+import styles from './style';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,10 +41,12 @@ export default function Navigation({ navigation }) {
         },
       })}
     >
-        <Tab.Screen name="Inicio" component={Home} options={{ headerShown: false }} />
-        <Tab.Screen name="Actividades" component={Tasks} />
-        <Tab.Screen name="Meta" component={Goal} />
-        <Tab.Screen name="Configuracion" component={Settings} />
+        <Tab.Group>
+          <Tab.Screen name="Inicio" component={Home} options={{ headerShown: false }} />
+          <Tab.Screen name="Actividades" component={Tasks} options={{ headerShown: false }} />
+          <Tab.Screen name="Meta" component={Goal} />
+          <Tab.Screen name="Configuracion" component={Settings} />
+        </Tab.Group>
       </Tab.Navigator>
   );
 }

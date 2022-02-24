@@ -6,6 +6,7 @@ import { authenticated,  dataRefresh } from '../../store/actions';
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
 import { updateUser } from '../../services/user'
+import styles from '../../style';
 
 function Settings() {
   const { deleteData } = useAuth();
@@ -47,7 +48,7 @@ function Settings() {
       const response = await updateUser(user._id, form);
       if(response.ok){
         dispatch(dataRefresh(!datarefresh));
-        setForm({name:'',email:''})
+        
       }else{
         alert("No se actualizaron los datos")
       }
@@ -69,7 +70,7 @@ function Settings() {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         
         <TouchableOpacity
-          style={styles.button}
+          style={styles.buttonimage}
           onPress={PickDocument}
         >
           <Image
@@ -82,31 +83,34 @@ function Settings() {
           }}
         />
         <Image
-          style={styles.icon}
+          style={styles.iconprofile}
           source={{
             uri: 'https://res.cloudinary.com/dw46hzlfr/image/upload/v1645435195/editar-texto_robpyv.png'
           }}
         />
         </TouchableOpacity>
-        <Text>Actualiza tu Usuario</Text>
+
+        <Text style={styles.title1}>Actualiza tu Usuario</Text>
         <TextInput
           style={styles.input}
           placeholder={dataUser.name}
-          value={form?.name}
           onChangeText={(text) => handleChangeText('name', text)}
         />
-        <Text>Actualiza tu Email</Text>
+        <Text style={styles.title1}>Actualiza tu Email</Text>
         <TextInput
           style={styles.input}
           placeholder={dataUser.email}
-          value={form?.email}
           onChangeText={(text) => handleChangeText('email', text)}
         />
         
         
-        <Button title="Enviar" style={styles.btnContainer} onPress={() => handleSubmit()} />
-        <Text>{"\n"}</Text>
-        <Button title="Salir" style={styles.btnContainer} onPress={() => Logout()} />
+        <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+          <Text style={styles.buttontext}>Enviar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button2} onPress={() => Logout()}>
+          <Text style={styles.buttontext2}>Salir</Text>
+        </TouchableOpacity>
+        
 
       </View>
       </TouchableWithoutFeedback>
@@ -114,41 +118,41 @@ function Settings() {
     );
   }
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      paddingHorizontal: 10
-    },
-    image: {
-      height: 100,
-      width: 100,
-      resizeMode: 'cover',
-      borderRadius: 50,
-    },
-    button: {
-      alignItems: "center",
-      backgroundColor: "transparent",
-      padding: 0
-    },
-    countContainer: {
-      alignItems: "center",
-      padding: 0
-    },
-    icon:{
-      height: 25,
-      width: 25,
-      marginTop:-20,
-      left:30,
-      marginBottom:30,
-      opacity: 0.8
-    },
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      width:200,
-    },
-  });
+  // const styles = StyleSheet.create({
+  //   container: {
+  //     flex: 1,
+  //     justifyContent: "center",
+  //     paddingHorizontal: 10
+  //   },
+  //   image: {
+  //     height: 100,
+  //     width: 100,
+  //     resizeMode: 'cover',
+  //     borderRadius: 50,
+  //   },
+  //   buttonimage: {
+  //     alignItems: "center",
+  //     backgroundColor: "transparent",
+  //     padding: 0
+  //   },
+  //   countContainer: {
+  //     alignItems: "center",
+  //     padding: 0
+  //   },
+  //   icon:{
+  //     height: 25,
+  //     width: 25,
+  //     marginTop:-20,
+  //     left:30,
+  //     marginBottom:30,
+  //     opacity: 0.8
+  //   },
+  //   input: {
+  //     height: 40,
+  //     margin: 12,
+  //     borderWidth: 1,
+  //     padding: 10,
+  //     width:200,
+  //   },
+  // });
   export default Settings
