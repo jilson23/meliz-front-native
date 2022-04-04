@@ -79,7 +79,7 @@ function Goal() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container2}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} disabled={Platform.OS === "web" ? true : false}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       
       <Text style={styles.text}>Aumenta tu meta si es muy fácil de lograr</Text>

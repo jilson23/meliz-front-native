@@ -14,19 +14,17 @@ function TaskList() {
 
   const renderItem = ({ item }) => <Item title={item.name} />;
 
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', paddingBottom:100, alignItems: 'center' }}>
-       
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', paddingBottom: 100, alignItems: 'center' }}>
+  <FlatList
+    data={dataUser?.activities}
+    renderItem={renderItem}
+    keyExtractor={item => item._id}
+  />
 
-        <FlatList
-          data={dataUser?.activities}
-          renderItem={renderItem}
-          keyExtractor={item => item._id}
-        />
+    </View>
+  );
+}
 
-      </View>
-    );
-  }
 
-  
-  export default TaskList
+export default TaskList

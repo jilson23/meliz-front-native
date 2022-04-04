@@ -66,7 +66,7 @@ function Settings() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} disabled={Platform.OS === "web" ? true : false}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         
         <TouchableOpacity

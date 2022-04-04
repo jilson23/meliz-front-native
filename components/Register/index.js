@@ -36,6 +36,11 @@ import styles from '../../style';
     }
 
     return (
+      <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container2}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} disabled={Platform.OS === "web" ? true : false}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style={styles.title1}>Me gané</Text>
         <TextInput
@@ -55,7 +60,8 @@ import styles from '../../style';
 
       </View>
 
-
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
 
 
     );

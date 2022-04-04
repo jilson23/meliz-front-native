@@ -1,15 +1,17 @@
-import React from 'react';
+import {useState, useEffect} from 'react';
 import {
   Text,
+  View,
   TextInput,
   TouchableOpacity,
+  Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView,
 } from 'react-native';
+
 import styles from '../../style';
 import { loginRequest } from '../../services/user';
 import { useSelector, useDispatch } from 'react-redux';
 import useAuth from '../../hooks/useAuth';
 import { dataRefresh } from '../../store/actions';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const LoginForm = ({ navigation }) => {
@@ -17,7 +19,7 @@ const LoginForm = ({ navigation }) => {
   const isAuthenticated = useSelector(state => state.isAuthenticated);
   const datarefresh = useSelector(state => state.dataRefresh);
   const { storeData, getData } = useAuth();
-  const [form, setForm] = React.useState(null);
+  const [form, setForm] = useState(null);
 
   const handleChangeText = (field, text) => {
     setForm({
@@ -26,11 +28,11 @@ const LoginForm = ({ navigation }) => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getData();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if(isAuthenticated){
       dispatch(dataRefresh(!datarefresh))
       navigation.navigate('Navigation');
@@ -52,9 +54,19 @@ const LoginForm = ({ navigation }) => {
     }
   };
 
-  return (
 
-        <SafeAreaView style={styles.containerdark}>
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container2}
+    >
+      <TouchableWithoutFeedback 
+        onPress={Keyboard.dismiss}
+        disabled={Platform.OS === "web" ? true : false}
+      >
+
+        <View style={styles.containerdark}>
           <Text style={styles.title1dark}>Meliz</Text>
           <Text style={styles.title2dark}>Tu Meta Feliz</Text>
           <Text style={styles.textdark}>Email</Text>
@@ -74,7 +86,9 @@ const LoginForm = ({ navigation }) => {
           <TouchableOpacity style={styles.buttondark} onPress={handleSubmit}>
             <Text style={styles.buttontextdark}>Login</Text>
           </TouchableOpacity>
-        </SafeAreaView>
+        </View>
+        </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

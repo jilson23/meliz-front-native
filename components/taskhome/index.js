@@ -1,4 +1,4 @@
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity,Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { dataRefresh } from '../../store/actions';
@@ -36,6 +36,13 @@ function Taskshome({ navigation }) {
   }
 
     return (
+      <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container2}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} disabled={Platform.OS === "web" ? true : false}>
+
+
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
        
 
@@ -58,6 +65,8 @@ function Taskshome({ navigation }) {
         
 
       </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
     );
   }
 
