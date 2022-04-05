@@ -1,4 +1,5 @@
-const API_URL = 'https://meliz2.herokuapp.com'
+import {API_URL} from "@env"
+// const API_URL = 'https://meliz2.herokuapp.com'
 
 export const addActivity = (id, form) => {
     const payload = {

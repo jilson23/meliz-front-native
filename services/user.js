@@ -1,5 +1,6 @@
-const API_URL = 'https://meliz2.herokuapp.com'
+import {API_URL} from "@env"
 
+// console.log(API_URL, 9)
 
 export const loginRequest = (form) => {
   const payload = {
