@@ -1,12 +1,11 @@
 import React from 'react';
-import { Text, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, View, TouchableOpacity, StyleSheet, Button, Image, TextInput } from 'react-native';
+import { Text, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, View, TouchableOpacity, TextInput } from 'react-native';
 import useAuth from '../../hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticated,  dataRefresh } from '../../store/actions';
-import * as DocumentPicker from 'expo-document-picker';
-import axios from 'axios';
 import { updateUser } from '../../services/user'
 import styles from '../../style';
+import ImageProfile from '../../components/ImageProfile';
 
 function Settings() {
   const { deleteData } = useAuth();
@@ -31,17 +30,7 @@ function Settings() {
   }
 
 
-  const PickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync();
 
-    const formData = new FormData();
-
-    if (!result.cancelled) {
-      formData.append('file', result.file);
-      await axios.post(`https://meliz2.herokuapp.com/api/uploads/file/${user._id}`, formData)
-      dispatch(dataRefresh(!datarefresh));
-    }
-  };
 
   async function handleSubmit(){
     try {
@@ -69,34 +58,18 @@ function Settings() {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} disabled={Platform.OS === "web" ? true : false}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         
-        <TouchableOpacity
-          style={styles.buttonimage}
-          onPress={PickDocument}
-        >
-          <Image
-          style={styles.image}
-          source={{
-            uri:
-            dataUser.profilePhoto === null
-                ? 'https://picsum.photos/100/100'
-                : dataUser.profilePhoto
-          }}
-        />
-        <Image
-          style={styles.iconprofile}
-          source={{
-            uri: 'https://res.cloudinary.com/dw46hzlfr/image/upload/v1645435195/editar-texto_robpyv.png'
-          }}
-        />
-        </TouchableOpacity>
 
-        <Text style={styles.title1}>Actualiza tu Usuario</Text>
+      <ImageProfile />
+
+
+
+        <Text style={styles.title1}>Actualizar Usuario</Text>
         <TextInput
           style={styles.input}
           placeholder={dataUser.name}
           onChangeText={(text) => handleChangeText('name', text)}
         />
-        <Text style={styles.title1}>Actualiza tu Email</Text>
+        <Text style={styles.title1}>Actualizar Email</Text>
         <TextInput
           style={styles.input}
           placeholder={dataUser.email}
@@ -117,42 +90,4 @@ function Settings() {
     </KeyboardAvoidingView>
     );
   }
-
-  // const styles = StyleSheet.create({
-  //   container: {
-  //     flex: 1,
-  //     justifyContent: "center",
-  //     paddingHorizontal: 10
-  //   },
-  //   image: {
-  //     height: 100,
-  //     width: 100,
-  //     resizeMode: 'cover',
-  //     borderRadius: 50,
-  //   },
-  //   buttonimage: {
-  //     alignItems: "center",
-  //     backgroundColor: "transparent",
-  //     padding: 0
-  //   },
-  //   countContainer: {
-  //     alignItems: "center",
-  //     padding: 0
-  //   },
-  //   icon:{
-  //     height: 25,
-  //     width: 25,
-  //     marginTop:-20,
-  //     left:30,
-  //     marginBottom:30,
-  //     opacity: 0.8
-  //   },
-  //   input: {
-  //     height: 40,
-  //     margin: 12,
-  //     borderWidth: 1,
-  //     padding: 10,
-  //     width:200,
-  //   },
-  // });
   export default Settings

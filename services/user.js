@@ -1,6 +1,6 @@
 import {API_URL} from "@env"
 
-// console.log(API_URL, 9)
+console.log(API_URL, 13)
 
 export const loginRequest = (form) => {
   const payload = {
