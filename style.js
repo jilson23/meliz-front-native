@@ -2,31 +2,31 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
     containerdark: {
-      flex: 1,
-      backgroundColor: "#210049",
-      alignItems: "center",
-      justifyContent: "center",
+        flex: 1,
+        backgroundColor: "#210049",
+        alignItems: "center",
+        justifyContent: "center",
     },
     spaces: {
-        margin:5
+        margin: 5
     },
     title1dark: {
         color: '#fff',
         fontSize: 60,
-        marginBottom:-10,
+        marginBottom: -10,
     },
     title2dark: {
         color: '#fe2f73',
         fontSize: 14,
-        marginBottom:40,
+        marginBottom: 40,
     },
     textdark: {
         color: 'white',
         fontSize: 18,
-        paddingLeft:20,
+        paddingLeft: 20,
         marginBottom: 10,
-        textAlign:"left",
-        width:300,
+        textAlign: "left",
+        width: 300,
     },
     inputdark: {
         height: 40,
@@ -36,15 +36,15 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         padding: 10,
         width: 300,
-        borderRadius:50
+        borderRadius: 50
     },
     buttondark: {
         width: 300,
-        marginTop:10,
+        marginTop: 10,
         color: '#210049',
-        borderRadius:50,
+        borderRadius: 50,
         backgroundColor: '#fe2f73',
-        padding:10
+        padding: 10
     },
     buttontextdark: {
         color: '#fff',
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
         alignItems: "center",
-        textAlign:"center",
+        textAlign: "center",
     },
     container2: {
         flex: 1
@@ -67,9 +67,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-around"
     },
     thumbnail: {
-      width: 200,
-      height: 200,
-      resizeMode: "contain",
+        width: 200,
+        height: 200,
+        resizeMode: "contain",
     },
     title1: {
         color: '#210049',
@@ -81,16 +81,17 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'gray',
-        textAlign:"center",
-        width:300,
+        textAlign: "center",
+        width: 300,
     },
     input: {
         height: 40,
         margin: 12,
+        textAlign: 'center',
         borderWidth: 1,
         padding: 10,
-        width:200,
-        borderRadius:20
+        width: 200,
+        borderRadius: 20
     },
     item: {
         backgroundColor: '#ffffff',
@@ -99,13 +100,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
     },
     button: {
-        marginTop:10,
+        marginTop: 10,
         color: '#210049',
-        borderRadius:50,
+        borderRadius: 50,
         backgroundColor: '#fe2f73',
-        padding:10,
+        padding: 10,
         paddingLeft: 25,
-        paddingRight:25,
+        paddingRight: 25,
     },
     buttontext: {
         color: '#fff',
@@ -113,12 +114,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     button2: {
-        marginTop:10,
+        marginTop: 10,
     },
     buttontext2: {
         color: '#210049',
-        textDecorationLine:'underline',
-        textDecorationColor:'#210049',
+        textDecorationLine: 'underline',
+        textDecorationColor: '#210049',
         fontSize: 16,
         textAlign: 'center',
     },
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         paddingHorizontal: 10
-      },
+    },
     image: {
         height: 100,
         width: 100,
@@ -142,24 +143,24 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 0
     },
-    iconprofile:{
+    iconprofile: {
         height: 25,
         width: 25,
-        marginTop:-20,
-        left:30,
-        marginBottom:30,
+        marginTop: -20,
+        left: 30,
+        marginBottom: 30,
         opacity: 0.8
     },
-    
+
 
     tabStyle: {
-        borderColor:'#210049'
+        borderColor: '#210049'
     },
     tabTextStyle: {
         color: '#210049'
     },
     activeTabStyle: {
-        backgroundColor:'#210049'
+        backgroundColor: '#210049'
     },
 
 });
