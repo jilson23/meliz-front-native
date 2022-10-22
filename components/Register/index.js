@@ -1,71 +1,70 @@
 import { useState } from 'react';
 import { Text, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity, View, Button, TextInput, StyleSheet } from 'react-native';
-// import AddFecha from '../Date';
 import SelectTask from '../SelectTask';
-import {addProfit} from '../../services/profit'
-import { useDispatch, useSelector} from 'react-redux';
+import { addProfit } from '../../services/profit'
+import { useDispatch, useSelector } from 'react-redux';
 import { dataRefresh } from '../../store/actions';
 import styles from '../../style';
-  
-  function Register() {
-    const dispatch = useDispatch()
-    const datarefresh = useSelector(state => state.dataRefresh);
-    const user = useSelector(state => state.user);
 
-    const [idTask, setIdTask] = useState()
-    const [ form, setForm] = useState(null)
+function Register() {
+  const dispatch = useDispatch()
+  const datarefresh = useSelector(state => state.dataRefresh);
+  const user = useSelector(state => state.user);
 
-    async function handleSubmit(){
-      const payload = {
-        activityId:idTask,
-        value:form
-      }
+  const [idTask, setIdTask] = useState()
+  const [form, setForm] = useState(null)
 
-      try {
-        const response = await addProfit(user._id, payload);
-        if(response.ok){
-          dispatch(dataRefresh(!datarefresh));
-          setForm(null)
-        }else{
-          alert("No se actualizaron los datos")
-        }
-        
-      } catch (error) {
-        alert(error.message);
-      }
+  async function handleSubmit() {
+    const payload = {
+      activityId: idTask,
+      value: form
     }
+    try {
+      const response = await addProfit(user._id, payload);
+      console.log(response)
+      if (response.ok) {
+        dispatch(dataRefresh(!datarefresh));
+        setForm(null)
+        alert("se actualizaron los datos")
+      } else {
+        alert("No se actualizaron los datos")
+      }
 
-    return (
-      <KeyboardAvoidingView
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+  return (
+    <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container2}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} disabled={Platform.OS === "web" ? true : false}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style={styles.title1}>Me gané</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Cantidad ganada"
-          keyboardType="numeric"
-          onChangeText={(num) =>  setForm(num)}
-          
-        />
-        <Text style={styles.title1}> Por: </Text>
-        <SelectTask setIdTask={setIdTask} />
-        {/* <AddFecha /> */}
-        <Text> {'\n'} </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Cantidad ganada"
+            keyboardType="numeric"
+            onChangeText={(num) => setForm(num)}
+
+          />
+          <Text style={styles.title1}> Por: </Text>
+          <SelectTask setIdTask={setIdTask} />
+          <Text> {'\n'} </Text>
           <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
             <Text style={styles.buttontext}>Enviar</Text>
           </TouchableOpacity>
 
-      </View>
+        </View>
 
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
 
 
-    );
-  }
+  );
+}
 
 
-  export default Register
+export default Register
