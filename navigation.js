@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import iconsName from './utils/icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -19,34 +19,33 @@ export default function Navigation({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
-  React.useEffect(async()=>{
+  useEffect(async () => {
     const response = await getAllDataUser(user._id)
     const data = await response.json()
     dispatch(dataUser(data));
-  },[datarefresh])
+  }, [datarefresh])
 
-  React.useEffect(() => {
-    if(!isAuthenticated){
+  useEffect(() => {
+    if (!isAuthenticated) {
       navigation.navigate('Login');
     }
   }, [isAuthenticated]);
-  
+
   return (
-      <Tab.Navigator
+    <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           const iconName = iconsName(route.name);
-
           return <FontAwesome name={iconName} size={size} color={color} />;
         },
       })}
     >
-        <Tab.Group>
-          <Tab.Screen name="Inicio" component={Home} options={{ headerShown: false }} />
-          <Tab.Screen name="Actividades" component={Tasks} options={{ headerShown: false }} />
-          <Tab.Screen name="Meta" component={Goal} />
-          <Tab.Screen name="Configuracion" component={Settings} />
-        </Tab.Group>
-      </Tab.Navigator>
+      <Tab.Group>
+        <Tab.Screen name="Inicio" component={Home} options={{ headerShown: false }} />
+        <Tab.Screen name="Actividades" component={Tasks} options={{ headerShown: false }} />
+        <Tab.Screen name="Meta" component={Goal} />
+        <Tab.Screen name="Configuracion" component={Settings} />
+      </Tab.Group>
+    </Tab.Navigator>
   );
 }
